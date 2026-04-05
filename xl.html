@@ -139,14 +139,17 @@
         // Угол указателя (сверху) в радианах
         const POINTER_ANGLE = -Math.PI / 2;
         
+        // Получить угол поворота колеса, чтобы указатель смотрел на середину сектора sectorIndex
         function getRotationForSector(sectorIndex) {
-    // Случайное смещение внутри сектора: от 0.1 до 0.9 (не включая края, чтобы не было на границе) (не, поставил больше, нах надо)
-    	const randomOffset = 0.05 + Math.random() * 0.7; // диапазон ~0.05..0.85
+    // Случайное смещение внутри сектора: от 0.1 до 0.9 (не включая края, чтобы не было на границе)
+    	const randomOffset = 0.05 + Math.random() * 0.7; // диапазон ~0.15..0.85
     	const randomAngle = sectorIndex * ANGLE_STEP + ANGLE_STEP * randomOffset;
-	    let rot = POINTER_ANGLE - randomAngle;
-	    rot = ((rot % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
-	    if (rot > Math.PI) rot -= 2*Math.PI;
+	let rot = POINTER_ANGLE - randomAngle;
+	rot = ((rot % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+	if (rot > Math.PI) rot -= 2*Math.PI;
     		return rot;
+}
+        
         // Предвычисленные углы для каждого сектора
         const SECTOR_ROTATIONS = VALUES.map((_, idx) => getRotationForSector(idx));
         
@@ -335,7 +338,7 @@
             if (normDelta > Math.PI) normDelta -= 2*Math.PI;
             const targetEnd = startRot + normDelta + fullTurns * 2 * Math.PI;
             
-            const duration = 10000 + Math.random() * 40000; // 10-20 сек
+            const duration = 10000 + Math.random() * 20000; // 10-20 сек
             const startTime = performance.now();
             
             function easeOutQuint(t) {
@@ -361,7 +364,7 @@
                     if (isFirstSpinNow) {
                         markAsSpun();
                         isGuaranteedFirstSpin = false;
-                        showToast(`🏆 ВЫ ВЫИГРАЛИ ${formatMoney(winAmount)} 🏆`, true);
+                        showToast(`🏆  ТЫ ВЫИГРАЛ ${formatMoney(winAmount)}  🏆`, true);
                     } else {
                         showToast(`🏆 ВЫ ВЫИГРАЛИ ${formatMoney(winAmount)} 🏆`, true);
                     }
