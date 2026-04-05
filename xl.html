@@ -337,7 +337,7 @@
             if (normDelta > Math.PI) normDelta -= 2*Math.PI;
             const targetEnd = startRot + normDelta + fullTurns * 2 * Math.PI;
             
-            const duration = 10000 + Math.random() * 30000; // 10-20 сек
+            const duration = 10000 + Math.random() * 40000; // 10-20 сек
             const startTime = performance.now();
             
             function easeOutQuint(t) {
@@ -363,7 +363,7 @@
                     if (isFirstSpinNow) {
                         markAsSpun();
                         isGuaranteedFirstSpin = false;
-                        showToast(`🏆  ТЫ ВЫИГРАЛ ${formatMoney(winAmount)}  🏆`, true);
+                        showToast(`🏆 ВЫ ВЫИГРАЛИ ${formatMoney(winAmount)} 🏆`, true);
                     } else {
                         showToast(`🏆 ВЫ ВЫИГРАЛИ ${formatMoney(winAmount)} 🏆`, true);
                     }
