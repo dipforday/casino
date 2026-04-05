@@ -139,16 +139,14 @@
         // Угол указателя (сверху) в радианах
         const POINTER_ANGLE = -Math.PI / 2;
         
-        // Получить угол поворота колеса, чтобы указатель смотрел на середину сектора sectorIndex
         function getRotationForSector(sectorIndex) {
-            const midSectorAngle = sectorIndex * ANGLE_STEP + ANGLE_STEP / 2;
-            let rot = POINTER_ANGLE - midSectorAngle;
-            // нормализуем в диапазон (-PI, PI]
-            rot = ((rot % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
-            if (rot > Math.PI) rot -= 2*Math.PI;
-            return rot;
-        }
-        
+    // Случайное смещение внутри сектора: от 0.1 до 0.9 (не включая края, чтобы не было на границе) (не, поставил больше, нах надо)
+    	const randomOffset = 0.05 + Math.random() * 0.7; // диапазон ~0.05..0.85
+    	const randomAngle = sectorIndex * ANGLE_STEP + ANGLE_STEP * randomOffset;
+	    let rot = POINTER_ANGLE - randomAngle;
+	    rot = ((rot % (2*Math.PI)) + 2*Math.PI) % (2*Math.PI);
+	    if (rot > Math.PI) rot -= 2*Math.PI;
+    		return rot;
         // Предвычисленные углы для каждого сектора
         const SECTOR_ROTATIONS = VALUES.map((_, idx) => getRotationForSector(idx));
         
